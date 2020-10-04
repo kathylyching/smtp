@@ -2,7 +2,7 @@ from socket import *
 import ssl
 import base64
 
-def smtp_client(port=1065, mailserver='127.0.0.1'):
+def smtp_client(port=1025, mailserver='127.0.0.1'):
     msg = b"\r\n I love computer networking!."
     endmsg = b"\r\n.\r\n"
 
