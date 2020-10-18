@@ -1,84 +1,86 @@
 from socket import *
-import ssl
-import base64
-
 def smtp_client(port=1025, mailserver='127.0.0.1'):
-    msg = b"\r\n I love computer networking!."
-    endmsg = b"\r\n.\r\n"
+    msg = "\r\n Hello, computer networking is hard"
+    endmsg = "\r\n.\r\n"
 
     # Choose a mail server (e.g. Google mail server) if you want to verify the script beyond GradeScope
-    #mailserver = "smtp.gmail.com"
-    #serverPort = 465
+
 
     # Create socket called clientSocket and establish a TCP connection with mailserver and port
 
     # Fill in start
-    clientSocket = socket(AF_INET,SOCK_STREAM)
-    clientSocket.connect((mailserver, port))
-    clientSocketSSL = ssl.wrap_socket(clientSocket)
+    clientSocket = socket(AF_INET, SOCK_STREAM)
+    clientSocket.connect((mailserver,port))
     # Fill in end
-    recv = clientSocketSSL.recv(1024).decode()
+
+    recv = clientSocket.recv(1024).decode()
     #print(recv)
-    #if recv[:3] != "220":
-        #print("220 reply not received from server.")
+    #if recv[:3] != '220':
+        #print('220 reply not received from server.')
 
-
-    #print("helo")
     # Send HELO command and print server response.
-    heloCommand = b"HELO Kathy\r\n"
-    clientSocketSSL.send(heloCommand)
-    recv1 = clientSocketSSL.recv(1024).decode()
+    heloCommand = 'HELO Kathy\r\n'
+    clientSocket.send(heloCommand.encode())
+    recv1 = clientSocket.recv(1024).decode()
     #print(recv1)
-    #if recv[:3] != "250":
-        #print("250 reply not received from server.")
+    #if recv1[:3] != '250':
+       #print('250 reply not received from server.')
 
-
-    #print('rev2')
-    #print("MAIL")
     # Send MAIL FROM command and print server response.
-    mailFrom = b"MAIL FROM:<kathyy.chingg@gmail.com>\r\n"
-    clientSocketSSL.send(mailFrom)
-    recv3 = clientSocketSSL.recv(1024).decode()
-    #print (recv3)
-    #if recv3[:3] != "250":
-        #print("250 reply not received from server.")
+    # Fill in start
+    mailFrom = "MAIL FROM: kc3191@nyu.edu\r\n"
+    clientSocket.send(mailFrom.encode())
+    recv2 = clientSocket.recv(1024).decode()
+    #print(recv2)
+    #if recv2[:3] != '250':
+        #print('250 reply not received from server.')
+    # Fill in end
 
-
-    #print("RCPT")
     # Send RCPT TO command and print server response.
-    rcptTo = b"RCPT TO:<kc3191@nyu.edu>\r\n"
-    clientSocketSSL.send(rcptTo)
-    recv4 = clientSocketSSL.recv(1024).decode()
-    #print("After RCPT TO command: "+recv3)
-    #if recv4[:3] != "250":
-        #print ("250 reply not received from server.")
+    # Fill in start
+    rcptTo = "RCPT TO: kathyy.chingg@gmail.com\r\n"
+    clientSocket.send(rcptTo.encode())
+    recv3 = clientSocket.recv(1024).decode()
+    #print(recv3)
+    #if recv3[:3] != '250':
+        #print('250 reply not received from server.')
+    # Fill in end
 
-    #print("DATA")
     # Send DATA command and print server response.
-    data = b"DATA\r\n"
-    clientSocketSSL.send(data)
-    recv5 = clientSocketSSL.recv(1024).decode()
-    #print("After DATA command: "+recv5)
-    #if recv5[:3] != "250":
-        #print ("250 reply not received from server.")
+    # Fill in start
+    data = "DATA \r\n"
+    clientSocket.send(data.encode())
+    recv4 = clientSocket.recv(1024).decode()
+    #print(recv4)
+    #if recv4[:3] != '250':
+        #print('250 reply not received from server.')
+    # Fill in end
 
     # Send message data.
-    clientSocketSSL.send(msg)
+    # Fill in start
+    #msg = input('Enter Your Message Here:')
+    clientSocket.send(msg.encode())
+    # Fill in end
 
-    # Message ends with a single period.
-    clientSocketSSL.send(endmsg)
+    # Message ends with a single period. 
+    # Fill in start
+    clientSocket.send(endmsg.encode())
+    recv5 = clientSocket.recv(1024).decode()
+    #print(recv5)
+    #if recv5[:3] != '250':
+       #print('250 reply not received from server.')
+    # Fill in end
 
     # Send QUIT command and get server response.
-    #print('reached the end')
-    quit = b"QUIT\r\n"
-    clientSocketSSL.send(quit)
-    recv6 = clientSocketSSL.recv(1024).decode()
+    # Fill in
+    quit = "QUIT \r\n"
+    clientSocket.send(quit.encode())
+    recv6 = clientSocket.recv(1024).decode()
     #print(recv6)
-    #if recv6[:3] != "250":
-        #print ("250 reply not received from server.")
-    #print('end')
-    clientSocketSSL.close()
-    #print('closed')
+    #if recv6[:3] != '250':
+        #print('250 reply not received from server.')
+    clientSocket.close()
+    # Fill in end
 
 
 if __name__ == '__main__':
